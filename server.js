@@ -11,11 +11,8 @@ nunjucks.configure('views', {
 })
 
 
-var braveActors;
-db.getBraveActors(function(item) { braveActors = item });
-
 app.get('/', function(req, res) {
-  res.render('index', { braves: braveActors });
+  res.render('index');
 })
 
 
