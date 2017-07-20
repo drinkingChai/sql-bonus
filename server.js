@@ -11,15 +11,14 @@ nunjucks.configure('views', {
 })
 
 
-function done(data) {
-  app.get('/rand', function(req, res) {
-    res.render('index', { data: data });
-  })
-}
+// function done(data) {
+//   app.get('/rand', function(req, res) {
+//     res.render('index', { data: data });
+//   })
+// }
 
 app.get('/', function(req, res) {
-  db.getRandMovData(done);
-  res.redirect('/rand');
+  db.getRandMovData(res);
 })
 
 const port = process.env.PORT || 3000;

@@ -4,7 +4,7 @@ const db = new sqlite3.Database('imdb-large.sqlite3.db'); //connect to db
 
 var data = {};
 
-function getRandMovData(done) {
+function getRandMovData(res) {
   data = {};  // clear out the data
   db.all("SELECT id FROM movies", function(err, rows) {
     rand_id = rows[Math.floor(Math.random()*rows.length)].id;
@@ -21,7 +21,8 @@ function getRandMovData(done) {
                         ON roles.actor_id=actors.id \
                         WHERE roles.movie_id=?", rand_id, function(err, result) {
                           data.actors = result;
-                          done(data);
+                          // done(data);
+                          res.render('index', { data: data });
                         })
               })
     })
