@@ -6,8 +6,18 @@
   </head>
   <body>
 
-    {% for actor in braves %}
-      <li>{{ actor.first_name }} {{ actor.last_name }}</li>
+    <h2>Movie Info</h2>
+    <p>Name: {{ data.movie.name }}</p>
+    <p>Year: {{ data.movie.year }}</p>
+
+    <h2>Directors</h2>
+    {% for director in data.directors %}
+    <li>{{ director.first_name }} {{ director.last_name }}</li>
+    {% endfor %}
+
+    <h2>Actors</h2>
+    {% for actor in data.actors %}
+    <li>{{ actor.first_name }} {{ actor.last_name }}</li>
     {% endfor %}
 
   </body>

@@ -11,11 +11,16 @@ nunjucks.configure('views', {
 })
 
 
+function done(data) {
+  app.get('/rand', function(req, res) {
+    res.render('index', { data: data });
+  })
+}
+
 app.get('/', function(req, res) {
-  res.render('index');
+  db.getRandMovData(done);
+  res.redirect('/rand');
 })
-
-
 
 const port = process.env.PORT || 3000;
 app.listen(port, function() {
