@@ -2,6 +2,12 @@ const express = require('express');
 const db = require('./db');
 const nunjucks = require('nunjucks');
 
+
+// PIPE!!!
+const datapipe = require('./datapipe');
+//
+
+
 const app = express();
 app.set('view engine', 'html');
 app.engine('html', nunjucks.render);
@@ -11,14 +17,11 @@ nunjucks.configure('views', {
 })
 
 
-// function done(data) {
-//   app.get('/rand', function(req, res) {
-//     res.render('index', { data: data });
-//   })
-// }
 
 app.get('/', function(req, res) {
-  db.getRandMovData(res);
+  datapipe.getRandMov(function(data) {
+    res.render('index', { data: data });
+  })
 })
 
 const port = process.env.PORT || 3000;

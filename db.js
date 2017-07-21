@@ -15,13 +15,12 @@ function getRandMovData(res) {
               ON directors.id=movies_directors.director_id \
               WHERE movies_directors.movie_id=?", rand_id, function(err, result) {
                 data.directors = result;
-              }, function(err, result) {
                 db.all("SELECT * FROM actors \
                         JOIN roles \
                         ON roles.actor_id=actors.id \
                         WHERE roles.movie_id=?", rand_id, function(err, result) {
                           data.actors = result;
-                          // done(data);
+                          // console.log(data);
                           res.render('index', { data: data });
                         })
               })
