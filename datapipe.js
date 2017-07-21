@@ -3,7 +3,7 @@ const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('imdb-large.sqlite3.db'); //connect to db
 
 
-function getActors(exprt, id) {
+function getActorsById(exprt, id) {
   db.all("SELECT * FROM actors \
           JOIN roles \
           ON actors.id=roles.actor_id \
@@ -13,7 +13,7 @@ function getActors(exprt, id) {
           })
 }
 
-function getDirectors(exprt, id) {
+function getDirectorsById(exprt, id) {
   db.all("SELECT * FROM directors \
           JOIN movies_directors \
           ON directors.id=movies_directors.director_id \
@@ -23,7 +23,7 @@ function getDirectors(exprt, id) {
           })
 }
 
-function getMovData(exprt, id) {
+function getMovById(exprt, id) {
   db.get("SELECT * FROM movies WHERE id=?", id, function(err, result) {
     data.movie = result;
     done(exprt, id);
@@ -40,36 +40,26 @@ function getRandMovId(exprt) {
 
 
 var data = {};
-var fnQueue = [getMovData, getDirectors, getActors];
+var fnQueue = [];
 
-// convert this to function with data and fnQueue with class-ish
 function done(exprt, output) {
   if (fnQueue.length) {
     fn = fnQueue.shift();
     fn(exprt, output);
   } else {
     exprt(data);
-    console.log(data);
+    data = {};  // clear out the data
+    // console.log(data);
   }
 }
 
 
-function makeQuery(exprt, fnQ) {
-  // WIP
-  this.data = {};
-  this.fnQueue = fnQ;
-
-  function done(exprt, output) {
-    if (fnQueue.length) {
-      fn = fnQueue.shift();
-      fn(exprt, output);
-    } else {
-      exprt(data);
-      console.log(data);
-    }
-  }
+function getRandMov(exprt) {
+  fnQueue = [getMovById, getDirectorsById, getActorsById];
+  getRandMovId(exprt);
 }
+
 
 module.exports = {
-  getRandMov: getRandMovId
+  getRandMov: getRandMov
 }

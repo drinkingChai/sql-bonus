@@ -2,7 +2,6 @@ const express = require('express');
 const db = require('./db');
 const nunjucks = require('nunjucks');
 
-
 // PIPE!!!
 const datapipe = require('./datapipe');
 //
@@ -15,7 +14,6 @@ nunjucks.configure('views', {
   express: app,
   noCache: true
 })
-
 
 
 app.get('/', function(req, res) {
